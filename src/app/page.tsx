@@ -1,4 +1,3 @@
-// app/page.tsx
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -36,7 +35,9 @@ export default function HomePage() {
         let filtered = data.data || [];
 
         if (orbitCodes.length > 0) {
-          filtered = filtered.filter((sat: Satellite) => orbitCodes.includes(sat.orbitCode || ''));
+          filtered = filtered.filter((sat: Satellite) =>
+            orbitCodes.includes(sat.orbitCode || '')
+          );
         }
 
         if (searchTerm.trim() !== '') {
