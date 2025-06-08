@@ -91,7 +91,7 @@ export default function HomePage() {
           <p className="text-center text-red-500">{error}</p>
         ) : satellites.length === 0 ? (
           <p className="text-center text-gray-500 italic mt-4">
-            "A fallback message is shown when filtered results are empty due to incomplete data returned by the API."
+            &quot;A fallback message is shown when filtered results are empty due to incomplete data returned by the API.&quot;
           </p>
         ) : (
           <SatelliteTable satellites={satellites} />
