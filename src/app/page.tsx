@@ -20,19 +20,20 @@ export default function HomePage() {
       setLoading(true);
       setError('');
       try {
-        const objectTypesParam =
-          objectTypes.length > 0 ? objectTypes.join(',') : 'ROCKET BODY,PAYLOAD,DEBRIS,UNKNOWN';
         const attributesParam =
           'noradCatId,intlDes,name,launchDate,objectType,countryCode,orbitCode';
 
-        const url = `/api/satellites?objectTypes=${encodeURIComponent(
-          objectTypesParam
-        )}&orbitCodes=${encodeURIComponent(orbitCodes.join(','))}&search=${encodeURIComponent(searchTerm)}`;
-
+        const url = `/api/satellites?attributes=${encodeURIComponent(attributesParam)}`;
         const res = await fetch(url);
         const data = await res.json();
 
         let filtered = data.data || [];
+
+        if (objectTypes.length > 0) {
+          filtered = filtered.filter((sat: Satellite) =>
+            objectTypes.includes(sat.objectType || '')
+          );
+        }
 
         if (orbitCodes.length > 0) {
           filtered = filtered.filter((sat: Satellite) =>
@@ -41,9 +42,10 @@ export default function HomePage() {
         }
 
         if (searchTerm.trim() !== '') {
+          const lower = searchTerm.toLowerCase();
           filtered = filtered.filter(
             (sat: Satellite) =>
-              sat.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              sat.name.toLowerCase().includes(lower) ||
               sat.noradCatId.includes(searchTerm)
           );
         }
@@ -82,6 +84,9 @@ export default function HomePage() {
           <p className="text-center text-blue-600">Loading...</p>
         ) : error ? (
           <p className="text-center text-red-500">{error}</p>
+        ) : satellites.length === 0 ? (
+          <p className="text-center text-gray-500 italic mt-4">
+            "A fallback message is shown when filtered results are empty due to incomplete data returned by the API."          </p>
         ) : (
           <SatelliteTable satellites={satellites} />
         )}
