@@ -25,6 +25,11 @@ export default function HomePage() {
 
         const url = `/api/satellites?attributes=${encodeURIComponent(attributesParam)}`;
         const res = await fetch(url);
+
+        if (!res.ok) {
+          throw new Error('Failed to fetch data');
+        }
+
         const data = await res.json();
 
         let filtered = data.data || [];
@@ -51,7 +56,7 @@ export default function HomePage() {
         }
 
         setSatellites(filtered);
-      } catch (_err) {
+      } catch {
         setError('Failed to fetch satellite data');
       } finally {
         setLoading(false);
@@ -86,7 +91,7 @@ export default function HomePage() {
           <p className="text-center text-red-500">{error}</p>
         ) : satellites.length === 0 ? (
           <p className="text-center text-gray-500 italic mt-4">
-            &quot;A fallback message is shown when filtered results are empty due to incomplete data returned by the API.&quot;
+            "A fallback message is shown when filtered results are empty due to incomplete data returned by the API."
           </p>
         ) : (
           <SatelliteTable satellites={satellites} />

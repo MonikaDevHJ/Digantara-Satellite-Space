@@ -5,8 +5,16 @@ export async function GET() {
   const attributes = "noradCatId,intlDes,name,launchDate,objectType,countryCode,orbitCode";
   const apiUrl = `https://backend.digantara.dev/v1/satellites?attributes=${encodeURIComponent(attributes)}`;
 
-  const res = await fetch(apiUrl);
-  const data = await res.json();
+  try {
+    const res = await fetch(apiUrl);
 
-  return NextResponse.json(data);
+    if (!res.ok) {
+      return NextResponse.json({ error: 'Failed to fetch satellites' }, { status: res.status });
+    }
+
+    const data = await res.json();
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  }
 }
