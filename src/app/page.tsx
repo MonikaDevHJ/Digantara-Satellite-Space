@@ -15,56 +15,54 @@ export default function HomePage() {
   const [objectTypes, setObjectTypes] = useState<string[]>([]);
   const [orbitCodes, setOrbitCodes] = useState<string[]>([]);
 
-  useEffect(() => {
-    const fetchSatellites = async () => {
-      setLoading(true);
-      setError('');
-      try {
-        const attributesParam =
-          'noradCatId,intlDes,name,launchDate,objectType,countryCode,orbitCode';
+ useEffect(() => {
+  const fetchSatellites = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const url = `/api/satellites`; // ✅ fixed here
+      const res = await fetch(url);
 
-        const url = `/api/satellites?attributes=${encodeURIComponent(attributesParam)}`;
-        const res = await fetch(url);
-
-        if (!res.ok) {
-          throw new Error('Failed to fetch data');
-        }
-
-        const data = await res.json();
-
-        let filtered = data.data || [];
-
-        if (objectTypes.length > 0) {
-          filtered = filtered.filter((sat: Satellite) =>
-            objectTypes.includes(sat.objectType || '')
-          );
-        }
-
-        if (orbitCodes.length > 0) {
-          filtered = filtered.filter((sat: Satellite) =>
-            orbitCodes.includes(sat.orbitCode || '')
-          );
-        }
-
-        if (searchTerm.trim() !== '') {
-          const lower = searchTerm.toLowerCase();
-          filtered = filtered.filter(
-            (sat: Satellite) =>
-              sat.name.toLowerCase().includes(lower) ||
-              sat.noradCatId.includes(searchTerm)
-          );
-        }
-
-        setSatellites(filtered);
-      } catch {
-        setError('Failed to fetch satellite data');
-      } finally {
-        setLoading(false);
+      if (!res.ok) {
+        throw new Error('Failed to fetch data');
       }
-    };
 
-    fetchSatellites();
-  }, [searchTerm, objectTypes, orbitCodes]);
+      const data = await res.json();
+
+      let filtered = data.data || [];
+
+      if (objectTypes.length > 0) {
+        filtered = filtered.filter((sat: Satellite) =>
+          objectTypes.includes(sat.objectType || '')
+        );
+      }
+
+      if (orbitCodes.length > 0) {
+        filtered = filtered.filter((sat: Satellite) =>
+          orbitCodes.includes(sat.orbitCode || '')
+        );
+      }
+
+      if (searchTerm.trim() !== '') {
+        const lower = searchTerm.toLowerCase();
+        filtered = filtered.filter(
+          (sat: Satellite) =>
+            sat.name.toLowerCase().includes(lower) ||
+            sat.noradCatId.includes(searchTerm)
+        );
+      }
+
+      setSatellites(filtered);
+    } catch {
+      setError('Failed to fetch satellite data');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchSatellites();
+}, [searchTerm, objectTypes, orbitCodes]);
+
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
