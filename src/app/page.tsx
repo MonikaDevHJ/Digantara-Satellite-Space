@@ -51,7 +51,7 @@ export default function HomePage() {
         }
 
         setSatellites(filtered);
-      } catch (err) {
+      } catch (_err) {
         setError('Failed to fetch satellite data');
       } finally {
         setLoading(false);
@@ -86,7 +86,8 @@ export default function HomePage() {
           <p className="text-center text-red-500">{error}</p>
         ) : satellites.length === 0 ? (
           <p className="text-center text-gray-500 italic mt-4">
-            "A fallback message is shown when filtered results are empty due to incomplete data returned by the API."          </p>
+            &quot;A fallback message is shown when filtered results are empty due to incomplete data returned by the API.&quot;
+          </p>
         ) : (
           <SatelliteTable satellites={satellites} />
         )}
