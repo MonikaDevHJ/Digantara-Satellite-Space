@@ -1,6 +1,6 @@
 # 🛰️ Digantara Satellite Explorer
 
-A responsive and high-performance satellite tracking app built using Next.js and TypeScript.  
+A responsive and high-performance satellite tracking app built using **Next.js** and **TypeScript**.  
 This project was created as part of a frontend assessment for Digantara.
 
 ---
@@ -11,39 +11,44 @@ This project was created as part of a frontend assessment for Digantara.
 - **Tailwind CSS** for styling
 - **Digantara REST API** for real satellite data
 - **React Hooks** for state management
-- **Virtual scrolling** using `react-window` for performance
-- **API routing** via Next.js to handle CORS and filtering
+- **Virtual scrolling** via `react-window` for large datasets
+- **API Routing** using Next.js to handle CORS and proxy filtering
 
 ---
 
 ## 🔍 Features
 
-### Core Functionality
+### ✅ Core Functionality
 
-- Search for satellites by name or NORAD ID (partial matches supported)
-- Multi-select filtering by:
-  - Object Type (ROCKET BODY, PAYLOAD, etc.)
-  - Orbit Code (LEO, GEO, etc.)
-- Responsive data table with:
-  - Columns: name, NORAD ID, orbit, object type, country, launch date
-  - Sorting support on name and ID
-- Virtualized rendering to support large datasets (~27k+ objects)
-- Clean loading and error UI
+- 🔎 Search for satellites by name or NORAD ID (partial matches supported)
+- 🎯 Filter by:
+  - Object Type (e.g., ROCKET BODY, PAYLOAD)
+  - Orbit Code (e.g., LEO, GEO, etc.)
+- 📊 Responsive table with columns:
+  - `name`, `noradCatId`, `orbitCode`, `objectType`, `countryCode`, `launchDate`
+- ⚡ Virtualized list rendering (smooth for ~27,000+ records)
+- 🔄 Clean loading/error handling
 
 ---
 
-### Optional Features (Bonus)
+### 🧪 Optional Features (Bonus)
 
-- Row selection (max 10)
-- Persist selections in localStorage
-- Navigate to a second page to view selected satellites
+- ✅ Select up to 10 satellites (with counter)
+- ✅ Save selections in `localStorage`
+- ✅ Navigate to a **Selected Satellites** page to view only chosen entries
+
+---
+
+## 🧠 API Behavior Notice
+
+> A fallback message is shown when filtered results are empty due to incomplete data returned by the API.
 
 ---
 
 ## 🛠️ Getting Started
 
-### 1. Clone this repo
+### 1. Clone the repo
 
 ```bash
-git clone https://github.com/your-username/drt_react_monikahj.git
-cd drt_react_monikahj
+git clone https://github.com/MonikaDevHJ/Digantara-Satellite-Space.git
+cd Digantara-Satellite-Space
